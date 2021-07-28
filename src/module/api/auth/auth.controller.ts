@@ -4,8 +4,10 @@ import {
   HttpCode,
   Post,
   Request,
+  Res,
   UseGuards,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { User } from '../../../entity/user.entity';
 import { LocalAuthGuard } from './auth.guard';
@@ -21,10 +23,13 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Body() request: User) {
-    const user = request;
+  async login(
+    @Body() request: { email: string; password: string },
+    @Res() res: Response,
+  ) {
+    const user = await this.authService.findUserByEmail(request.email);
     const token = await this.authService.getUserToken(user.user_id);
     user.password = undefined;
-    return { ...user, token };
+    return res.status(200).send({ data: { ...user, token } });
   }
 }

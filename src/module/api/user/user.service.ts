@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { isNotEmpty } from 'class-validator';
 import { Repository } from 'typeorm';
 import { User } from '../../../entity/user.entity';
 
@@ -40,5 +41,16 @@ export default class UserService {
       );
     }
     return user;
+  }
+
+  async searchUser(searchKey: string) {
+    const users = await this.userRepo.find();
+    const foundUser = await users.filter((user) => {
+      return (
+        user.email.toLowerCase().includes(searchKey) ||
+        user.user_name.toLowerCase().includes(searchKey)
+      );
+    });
+    return searchKey !== '' ? foundUser : users;
   }
 }

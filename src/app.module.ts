@@ -17,9 +17,6 @@ import config from 'ormconfig';
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot(config),
     ApiModule,
-    // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '..', 'public'),
-    // }),
   ],
   controllers: [AppController],
   providers: [AppService],

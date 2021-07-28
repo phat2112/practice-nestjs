@@ -8,7 +8,7 @@ const config: ConnectionOptions = {
   password: 'Admin@123',
   database: 'nestPractice',
   entities: ['dist/**/entity/*.entity{.ts,.js}'],
-  synchronize: true,
+  synchronize: false,
   migrations: ['dist/src/migrations/*.js'],
   cli: {
     migrationsDir: 'src/migrations',

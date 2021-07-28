@@ -51,6 +51,14 @@ export class AuthService {
     }
   }
 
+  async findUserByEmail(email: string) {
+    const user = await this.userService.getByEmail(email);
+    if (!user) {
+      throw new HttpException('User was not found...', HttpStatus.NOT_FOUND);
+    }
+    return user;
+  }
+
   async verifyPassword(plainTextPassword: string, hashedPassword: string) {
     const isPasswordMatching = await bcrypt.compare(
       plainTextPassword,
