@@ -7,6 +7,7 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ApiModule } from './module/api/api.module';
+import { AppGateway } from './app.gateway';
 import config from 'ormconfig';
 
 @Module({
@@ -19,6 +20,6 @@ import config from 'ormconfig';
     ApiModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AppGateway],
 })
 export class AppModule {}
